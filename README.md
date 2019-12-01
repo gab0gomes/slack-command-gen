@@ -1,5 +1,7 @@
 # slack-command-gen
 
+[Check it out!](https://gabrielr2508.github.io/slack-command-gen/)
+
 ## Project setup
 ```
 npm install
