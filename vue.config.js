@@ -1,3 +1,3 @@
 module.exports = {
-  assetsDir: 'vue-push-dir',
+  assetsDir: 'slack-command-gen',
 };
