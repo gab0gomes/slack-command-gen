@@ -9,6 +9,10 @@
             <h2 class="subtitle">
               A simple native and plugins-based command generator to Slack
             </h2>
+            <b-taglist attached>
+              <b-tag type="is-dark">Status</b-tag>
+              <b-tag type="is-info">under development</b-tag>
+            </b-taglist>
           </div>
         </div>
     </section>
