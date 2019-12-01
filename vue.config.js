@@ -1,3 +1,3 @@
 module.exports = {
-  assetsDir: 'slack-command-gen',
+  publicPath: 'slack-command-gen',
 };
