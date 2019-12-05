@@ -1,5 +1,5 @@
 export default {
-  command: '/remind',
+  command: 'remind',
   params: {
     who: {
       type: 'text',
@@ -8,14 +8,15 @@ export default {
     what: {
       type: 'text',
       order: 2,
+      quoted: true,
     },
     when: {
       type: 'date',
       order: 3,
     },
-    recurrence: {
-      type: 'text',
-      order: 4,
-    },
+    // recurrence: {
+    //   type: 'text',
+    //   order: 4,
+    // },
   },
 };

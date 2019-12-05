@@ -59,19 +59,36 @@
             </b-field>
           </div>
         </div>
-        <div class="card">
-          <div class="card-content">
-            <div class="content">
-              <form-generator
-                v-if="!_.isEmpty(fields)"
-                :fields="fields"
-              />
-              <b-message
-                v-else
-              >
-                No action selected
-              </b-message>
+        <div class="columns">
+          <div class="column">
+            <div class="card">
+              <div class="card-content">
+                <form-generator
+                  v-if="!_.isEmpty(fields)"
+                  :fields="fields"
+                  @submit="generateCommand"
+                />
+                <b-message
+                  v-else
+                >
+                  No action selected
+                </b-message>
+              </div>
             </div>
+          </div>
+        </div>
+        <div
+          v-if="command"
+          class="card">
+          <div class="card-content">
+            <b-message
+              title="Success! Copy the command and paste in a Slack text box."
+              type="is-success"
+              aria-close-label="Close message"
+              @close="command = null"
+            >
+              {{ command }}
+            </b-message>
           </div>
         </div>
       </div>
@@ -93,6 +110,7 @@ export default {
     return {
       selectedAction: null,
       selectedPlugin: null,
+      command: null,
     };
   },
 
@@ -111,6 +129,32 @@ export default {
       return !this._.isEmpty(this.selectedAction)
         ? commands[this.selectedPlugin].commands[this.selectedAction].params
         : null;
+    },
+  },
+
+  methods: {
+    generateCommand(form) {
+      let generatedCommand = `/${
+        commands[this.selectedPlugin]
+          .commands[this.selectedAction]
+          .command
+      }`;
+
+      this._.forEach(
+        this._.orderBy(this.fields, ['order']),
+        (field) => {
+          const fieldData = form[this._.findKey(this.fields, ['order', field.order])];
+          if (field.type === 'date') {
+            generatedCommand += ` ${this.moment(fieldData).format('[on] MM/DD/YYYY [at] HH:mm')}`;
+          } else if (field.quoted) {
+            generatedCommand += ` "${fieldData}"`;
+          } else {
+            generatedCommand += ` ${fieldData}`;
+          }
+        },
+      );
+
+      this.command = generatedCommand;
     },
   },
 };
